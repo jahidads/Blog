@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Developer Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Add Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #333;
+    }
+    .navbar a {
+      color: #fff !important;
+    }
+    .hero {
+      background-color: #f8f9fa;
+      padding: 80px 0;
+      text-align: center;
+    }
+    .blog-post {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+    }
+    .footer {
+      background: #333;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+    /* Minimal styles for nav system */
+    .nav-container {
+      width: 220px;
+      background: #222;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      padding: 30px 0 0 0;
+      z-index: 1040;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-container .logo {
+      font-size: 1.5rem;
+      color: #0084ff;
+      text-decoration: none;
+      margin-bottom: 40px;
+      font-weight: bold;
+    }
+    .nav-links {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+    }
+    .nav-links li {
+      width: 100%;
+    }
+    .nav-links a {
+      display: block;
+      color: #fff;
+      padding: 12px 30px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-links a.active, .nav-links a:hover {
+      background: #444;
+    }
+    .social-links {
+      margin-top: auto;
+      margin-bottom: 30px;
+    }
+    .social-links a {
+      color: #fff;
+      margin: 0 8px;
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+    .top-nav {
+      margin-left: 220px;
+      height: 60px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+    }
+    .menu-toggle {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #222;
+    }
+    .top-nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Add this */
+      gap: 20px;
+      width: 100%;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 5px 12px;
+    }
+    .search-bar input {
+      border: none;
+      background: transparent;
+      outline: none;
+      margin-left: 8px;
+    }
+    .user-profile .user-avatar img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    @media (max-width: 991px) {
+      .nav-container {
+        display: none;
+        left: -220px;
+        transition: left 0.3s;
+      }
+      .nav-container.open {
+        display: flex;
+        left: 0;
+      }
+      .top-nav {
+        margin-left: 0;
+      }
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 1039;
+      }
+      .sidebar-overlay.active {
+        display: block;
+      }
+      .hide-mobile {
+        display: none !important;
+      }
+    }
+
+    /* Hero Section Specific Styles */
+    .hero-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-content {
+      flex: 1 1 320px;
+      min-width: 280px;
+      text-align: left;
+    }
+    .hero-content h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+    .hero-content p {
+      font-size: 1.15rem;
+      margin-bottom: 28px;
+    }
+    .hero-btns .btn {
+      margin-right: 12px;
+      margin-bottom: 8px;
+    }
+    .hero-image {
+      flex: 1 1 320px;
+      min-width: 260px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    @media (max-width: 991px) {
+      .hero-flex {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+      }
+      .hero-content, .hero-image {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Responsive styles for #home hero section */
+@media (max-width: 991px) {
+  #home.hero {
+    padding: 40px 0 24px 0;
+    border-radius: 0 0 18px 18px;
+  }
+  #home .container.hero-flex {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  #home .hero-content {
+    margin-bottom: 32px;
+  }
+  #home .hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  #home .hero-image img {
+    width: 90vw;
+    max-width: 340px;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  #home.hero {
+    padding: 24px 0 12px 0;
+    border-radius: 0 0 10px 10px;
+  }
+  #home .hero-content h1 {
+    font-size: 1.3rem;
+  }
+  #home .hero-content p {
+    font-size: 1rem;
+  }
+  #home .hero-btns .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  #home .hero-image img {
+    width: 100vw;
+    max-width: 98vw;
+    border-width: 2px;
+  }
+}
+
+/* Flex utility for hero section */
+#home .container.hero-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+@media (max-width: 991px) {
+  #home .container.hero-flex {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+/* Featured Posts Styles */
+    .section {
+      padding: 60px 0;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .post-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+    .post-card:hover {
+      box-shadow: 0 6px 32px rgba(0,0,0,0.12);
+    }
+    .post-img img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .post-content {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .post-tag {
+      display: inline-block;
+      background: #e9ecef;
+      color: #333;
+      font-size: 0.85rem;
+      border-radius: 12px;
+      padding: 2px 12px;
+      margin-bottom: 10px;
+    }
+    .post-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+    }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .post-meta img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #eee;
+    }
+    @media (max-width: 600px) {
+      .posts-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .post-img img {
+        height: 140px;
+      }
+    }
+
+    /* Write Section Styles */
+    #write {
+      background: #f5f8fa;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+      margin-top: 40px;
+      margin-bottom: 40px;
+      padding: 40px 0;
+    }
+    #write .container {
+      max-width: 700px;
+    }
+    #write .form-control, #write .form-select {
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+    }
+    #write .btn-primary {
+      background: #007bff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    #write .btn-primary:hover {
+      background: #0056b3;
+    }
+
+    /* ...existing code... */
+#home.hero {
+  background: linear-gradient(120deg, #e0e7ff 0%, #f8fafc 100%);
+  border-radius: 0 0 32px 32px;
+  box-shadow: 0 8px 32px rgba(60,80,180,0.07);
+  position: relative;
+  overflow: hidden;
+}
+.search-bar {
+  position: relative;
+}
+.search-bar input:focus {
+  background: #fffbe7;
+}
+#clearSearchBtn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1rem;
+}
+.search-suggestions {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+}
+.suggestion-item {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.suggestion-item:hover, .suggestion-item:focus {
+  background: #f1f5fa;
+  outline: none;
+}
+.topic-suggestions {
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+.suggest-badge {
+  display: inline-block;
+  background: #e0e7ff;
+  color: #3b3b7b;
+  font-weight: 500;
+  border-radius: 16px;
+  padding: 6px 18px;
+  margin: 0 6px 8px 0;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.18s, color 0.18s;
+  border: 1px solid #bfcfff;
+}
+.suggest-badge:hover {
+  background: #6366f1;
+  color: #fff;
+}
+.highlight-post {
+  animation: highlightFade 1.5s;
+  box-shadow: 0 0 0 4px #6366f1;
+}
+@keyframes highlightFade {
+  0% { box-shadow: 0 0 0 4px #6366f1; }
+  100% { box-shadow: 0 0 0 0 #fff; }
+}
+
+.hero-stats {
+  margin-top: 24px;
+}
+.stat-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 18px 32px;
+  min-width: 110px;
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #6366f1;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+.stat-label {
+  font-size: 1rem;
+  color: #555;
+}
+@media (max-width: 600px) {
+  .hero-stats {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .stat-box {
+    min-width: 80px;
+    padding: 12px 0;
+  }
+}
+@media (min-width: 992px) {
+  #home .hero-image { order: -1; }
+}
+  </style>
+</head>
+<body>
+<!-- Navigation System -->
+<div class="nav-container" id="navContainer" style="box-shadow: 2px 0 16px rgba(60,80,180,0.07);">
+  <a href="#home" class="logo" style="letter-spacing:1px;">
+    <i class="fas fa-blog"></i>
+    Blog
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home"><i class="fas fa-home me-2"></i> Home</a></li>
+    <li><a href="#discover"><i class="fas fa-compass me-2"></i> Discover</a></li>
+    <li><a href="#write"><i class="fas fa-pencil-alt me-2"></i> Write</a></li>
+    <li><a href="#articles"><i class="fas fa-book me-2"></i> Articles</a></li>
+    <li><a href="#categories"><i class="fas fa-folder me-2"></i> Categories</a></li>
+    <li><a href="#trending"><i class="fas fa-chart-line me-2"></i> Trending</a></li>
+  </ul>
+  <div class="social-links" style="width:100%;text-align:center;padding-top:18px;">
+    <h2 style="font-size:1.1rem;font-weight:600;margin-bottom:10px;letter-spacing:0.5px;background:linear-gradient(90deg,#414253 0%,#3d4144 100%);color:#fff;padding:8px 0;border-radius:8px;box-shadow:0 2px 8px rgba(47, 50, 65, 0.07);text-shadow:0 1px 4px rgba(60,80,180,0.12);">Follow Me</h2>
+    <a href="https://x.com/jahidhasan_tw" target="_blank" title="Twitter" style="margin:0 10px;">
+      <i class="fab fa-twitter" style="color:#1da1f2;"></i>
+    </a>
+    <a href="https://github.com/jahidads" target="_blank" title="GitHub" style="margin:0 10px;">
+      <i class="fab fa-github" style="color:#fffafa;"></i>
+    </a>
+    <a href="https://bd.linkedin.com/in/jahidads" target="_blank" title="LinkedIn" style="margin:0 10px;">
+      <i class="fab fa-linkedin" style="color:#0077b5;"></i>
+    </a>
+    <a href="https://www.instagram.com/jahidhasan2.0ff/" target="_blank" title="Instagram" style="margin:0 10px;">
+      <i class="fab fa-instagram" style="color:#e1306c;"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Top Navigation Bar -->
+<div class="top-nav">
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div class="top-nav-actions" style="width:100%;">
+        <div style="margin: 0 auto;">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input 
+                  type="text" 
+                  id="searchInput"
+                  placeholder="Quick search"
+                  autocomplete="off"
+                  aria-label="Quick search"
+                  style="min-width:160px;"
+                  onfocus="showTopicDropdown()"
+                  oninput="showSuggestions(this.value)"
+                  onkeydown="if(event.key==='Enter'){event.preventDefault(); performSearch();}"
+                >
+                <button type="button" id="clearSearchBtn" title="Clear search" style="background:none;border:none;outline:none;cursor:pointer;display:none;">
+      <i class="fas fa-times"></i>
+    </button>
+                <div id="topicDropdown" class="search-suggestions" style="display:none; position:absolute; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); z-index:1050; width:100%;">
+  <div class="suggestion-item" onclick="selectTopic('Bootstrap')">Bootstrap</div>
+  <div class="suggestion-item" onclick="selectTopic('JavaScript')">JavaScript</div>
+  <div class="suggestion-item" onclick="selectTopic('Best Practices')">Best Practices</div>
+  <div class="suggestion-item" onclick="selectTopic('Web Development')">Web Development</div>
+  <div class="suggestion-item" onclick="selectTopic('CSS')">CSS</div>
+  <div class="suggestion-item" onclick="selectTopic('Performance')">Performance</div>
+  <div class="suggestion-item" onclick="selectTopic('React')">React</div>
+  <div class="suggestion-item" onclick="selectTopic('Node.js')">Node.js</div>
+  <div class="suggestion-item" onclick="selectTopic('Accessibility')">Accessibility</div>
+  <div class="suggestion-item" onclick="selectTopic('TypeScript')">TypeScript</div>
+</div>
+                <div id="searchSuggestions" class="search-suggestions" style="display:none; position:absolute; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); z-index:1050; width:100%;"></div>
+            </div>
+        </div>
+        <a href="#write" class="btn btn-primary hide-mobile">
+            <i class="fas fa-plus"></i> New Post
+        </a>
+        <div class="user-profile">
+            <div class="user-avatar">
+                <img src="profile.jpg" alt="User">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="container hero-flex">
+    <div class="hero-content">
+      <h1>Crafting Digital Experiences with Code &amp; Creativity</h1>
+      <p>Welcome to my developer blog where I share insights, tutorials, and the latest in full stack development. Join me on the journey through the ever-evolving world of web technologies.</p>
+      <div class="hero-btns">
+        <a href="#discover" class="btn btn-primary">Explore Articles</a>
+        <a href="#trending" class="btn btn-secondary">Trending Articles</a>
+      </div>
+      <!-- New: Quick Topic Suggestions -->
+      <div class="topic-suggestions mt-4">
+        <span class="suggest-badge" onclick="scrollToTag('Bootstrap')">Bootstrap</span>
+        <span class="suggest-badge" onclick="scrollToTag('JavaScript')">JavaScript</span>
+        <span class="suggest-badge" onclick="scrollToTag('Development')">Development</span>
+        <span class="suggest-badge" onclick="scrollToTag('CSS')">CSS</span>
+        <span class="suggest-badge" onclick="scrollToTag('Performance')">Performance</span>
+        <span class="suggest-badge" onclick="scrollToTag('React')">React</span>
+        <span class="suggest-badge" onclick="scrollToTag('Node.js')">Node.js</span>
+      </div>
+      <!-- New: Animated Stats -->
+      <div class="hero-stats mt-4 d-flex flex-wrap gap-4 justify-content-center">
+        <div class="stat-box text-center">
+          <div class="stat-num" id="statPosts">0</div>
+          <div class="stat-label">Articles</div>
+        </div>
+        <div class="stat-box text-center">
+          <div class="stat-num" id="statAuthors">0</div>
+          <div class="stat-label">Authors</div>
+        </div>
+        <div class="stat-box text-center">
+          <div class="stat-num" id="statTopics">0</div>
+          <div class="stat-label">Topics</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://cdn.pixabay.com/photo/2022/01/29/13/08/programming-6977450_640.jpg" alt="Web Development">
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section id="discover" class="section">
+    <div class="container">
+        <h2 class="section-title">Latest Posts</h2>
+        <div class="posts-grid">
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2018/03/09/16/32/woman-3211957_640.jpg" alt="Bootstrap Responsive">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Bootstrap</span>
+                    <h3 class="post-title">🛠️ Building a Responsive Website with Bootstrap</h3>
+                    <p>This post covers how to build a fully responsive layout using Bootstrap 5, including navbar, grid, and mobile optimizations.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="Author">
+                        <div>
+                            <strong>Jahid Hasan</strong>
+                            <div>Aug 1, 2025 · 6 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2019/09/21/12/15/matrix-4493783_1280.jpg" alt="JavaScript ES6">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">JavaScript</span>
+                    <h3 class="post-title">🚀 Mastering JavaScript ES6 Features</h3>
+                    <p>Explore the new features introduced in ES6, including arrow functions, promises, and template literals, to write cleaner and more efficient code.</p>
+                    <div class="post-meta">
+                        <img src="https://cdn.pixabay.com/photo/2016/03/23/21/12/books-1275681_640.jpg" alt="Author">
+                        <div>
+                            <strong>jone doe</strong>
+                            <div>Aug 1, 2025 · 6 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" alt="Clean HTML CSS">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Best Practices</span>
+                    <h3 class="post-title">💡 Top 5 Tips for Clean HTML &amp; CSS</h3>
+                    <p>Learn how to keep your HTML semantic, your CSS organized, and your website fast and maintainable.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/women/21.jpg" alt="Author">
+                        <div>
+                            <strong>Emily Carter</strong>
+                            <div>Jul 25, 2025 · 4 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="PHP vs JavaScript">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Web Development</span>
+                    <h3 class="post-title">⚙️ PHP vs JavaScript: What to Use Where</h3>
+                    <p>A traditional take on how these two languages serve your website differently and where each one shines best.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Author">
+                        <div>
+                            <strong>David Kim</strong>
+                            <div>Jul 15, 2025 · 5 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2017/11/16/09/32/matrix-2953869_640.jpg" alt="CSS Grid Layout">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">CSS</span>
+                    <h3 class="post-title">🎨 Designing with CSS Grid Layout</h3>
+                    <p>Unlock the power of CSS Grid to create complex, responsive layouts with minimal code and maximum flexibility.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/women/41.jpg" alt="Author">
+                        <div>
+                            <strong>Anna White</strong>
+                            <div>Jul 2, 2025 · 5 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=800&q=80" alt="Web Performance">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Performance</span>
+                    <h3 class="post-title">🚀 Optimizing Web Performance for 2025</h3>
+                    <p>Discover the latest strategies for speeding up your website, from Core Web Vitals to next-gen image formats and smarter resource loading.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="Author">
+                        <div>
+                            <strong>Jahid Hasan</strong>
+                            <div>Jun 30, 2025 · 7 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2020/03/09/13/54/engineering-4915801_640.jpg" alt="React Hooks">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">React</span>
+                    <h3 class="post-title">🔗 Understanding React Hooks in Depth</h3>
+                    <p>A comprehensive guide to using React Hooks for state and lifecycle management in functional components.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Author">
+                        <div>
+                            <strong>Chris Evans</strong>
+                            <div>Jul 10, 2025 · 7 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2017/10/31/11/30/binary-2904980_640.jpg" alt="Node.js Performance">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Node.js</span>
+                    <h3 class="post-title">⚡ 10 Tips to Boost Node.js Performance</h3>
+                    <p>Optimize your Node.js applications with these practical performance tips and best practices.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Author">
+                        <div>
+                            <strong>Sophia Lee</strong>
+                            <div>Jul 5, 2025 · 8 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Accessibility">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Accessibility</span>
+                    <h3 class="post-title">🌍 Making Your Website Accessible for Everyone</h3>
+                    <p>Essential steps and tools for ensuring your website is usable by people with disabilities.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/23.jpg" alt="Author">
+                        <div>
+                            <strong>Oliver Smith</strong>
+                            <div>Jun 28, 2025 · 5 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80" alt="TypeScript">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">TypeScript</span>
+                    <h3 class="post-title">📘 Why You Should Use TypeScript in 2025</h3>
+                    <p>Discover the benefits of TypeScript for large-scale JavaScript projects and how to get started quickly.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Author">
+                        <div>
+                            <strong>Linda Brown</strong>
+                            <div>Jun 20, 2025 · 6 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2018/12/10/08/51/network-3866435_640.jpg" alt="Web Performance">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Performance</span>
+                    <h3 class="post-title">🚀 Optimizing Web Performance for 2025</h3>
+                    <p>Discover the latest strategies for speeding up your website, from Core Web Vitals to next-gen image formats and smarter resource loading.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Author">
+                        <div>
+                            <strong>John Doe</strong>
+                            <div>Jan 1, 2025 · 5 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2019/02/20/07/23/smart-home-4008572_640.jpg" alt="React Hooks">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">React</span>
+                    <h3 class="post-title">🔗 Understanding React Hooks in Depth</h3>
+                    <p>Explore the power of React Hooks and how they can simplify your component logic and state management.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Author">
+                        <div>
+                            <strong>Jane Smith</strong>
+                            <div>Feb 15, 2025 · 6 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2017/07/14/07/40/matrix-2502951_640.jpg" alt="Node.js Performance">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Node.js</span>
+                    <h3 class="post-title">⚡ 10 Tips to Boost Node.js Performance</h3>
+                    <p>Learn how to optimize your Node.js applications for better performance and scalability with these
+practical tips.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Author">
+                        <div>
+                            <strong>Mike Johnson</strong>
+                            <div>Mar 10, 2025 · 5 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="TypeScript">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">TypeScript</span>
+                    <h3 class="post-title">📘 Why You Should Use TypeScript in 2025</h3>
+                    <p>Discover the benefits of TypeScript for large-scale JavaScript projects and how to get started quickly.</p>
+                    <div class="post-meta">
+                      <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Author">
+                      <div>
+                        <strong>Linda Brown</strong>
+                        <div>Apr 5, 2025 · 6 min read</div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2018/02/23/09/21/city-3175068_640.jpg" alt="Accessibility">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Accessibility</span>
+                    <h3 class="post-title">🌍 Making Your Website Accessible for Everyone</h3>
+                    <p>Learn the best practices for creating inclusive web experiences that cater to all users, including those with disabilities.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="Author">
+                        <div>
+                            <strong>Emily White</strong>
+                            <div>May 12, 2025 · 7 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Writing Section -->
+<section id="write" class="section">
+  <div class="container">
+    <h2 class="section-title">Writing Articles</h2>
+    <p class="mb-4 text-center">Share your knowledge and insights with the community. Use the editor below to draft and publish your next article.</p>
+    <form id="articleForm">
+      <div class="mb-3">
+        <label for="articleTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="articleTitle" placeholder="Enter your article title" required>
+      </div>
+      <div class="mb-3">
+        <label for="articleCategory" class="form-label">Category</label>
+        <select class="form-select" id="articleCategory" required>
+          <option selected disabled value="">Choose category</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="CSS">CSS</option>
+          <option value="React">React</option>
+          <option value="Node.js">Node.js</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="articleImage" class="form-label">Cover Image URL</label>
+        <input type="url" class="form-control" id="articleImage" placeholder="Paste an image URL (optional)">
+      </div>
+      <div class="mb-3">
+        <label for="articleContent" class="form-label">Content</label>
+        <textarea class="form-control" id="articleContent" rows="8" placeholder="Write your article here..." required></textarea>
+        <div class="form-text">Supports <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Markdown</a> formatting.</div>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="insertCodeBtn"><i class="fas fa-code"></i> Insert Code Block</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="insertImageBtn"><i class="fas fa-image"></i> Insert Image</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="wordCountBtn"><i class="fas fa-sort-numeric-up"></i> Word Count</button>
+        <span id="wordCount" class="ms-2 text-muted"></span>
+      </div>
+      <div class="mb-3">
+        <label for="articleTags" class="form-label">Tags</label>
+        <input type="text" class="form-control" id="articleTags" placeholder="e.g. frontend, tips, accessibility">
+        <div class="form-text">Separate tags with commas.</div>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="saveDraft">
+        <label class="form-check-label" for="saveDraft">Save as draft</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Publish Article</button>
+      <button type="button" class="btn btn-secondary ms-2" id="clearFormBtn">Clear</button>
+    </form>
+    <div id="previewContainer" style="display:none; margin-top:32px;">
+      <h4>Live Preview</h4>
+      <div id="articlePreview" style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"></div>
+    </div>
+    <div id="draftsContainer" style="margin-top:32px; display:none;">
+      <h5>Saved Drafts</h5>
+      <ul id="draftsList" class="list-group"></ul>
+    </div>
+  </div>
+</section>
+<div class="topic-suggestions mb-3" style="text-align:center;">
+  <span class="suggest-badge" onclick="scrollToTag('Bootstrap')">Bootstrap</span>
+  <span class="suggest-badge" onclick="scrollToTag('JavaScript')">JavaScript</span>
+  <span class="suggest-badge" onclick="scrollToTag('Development')">Development</span>
+  <span class="suggest-badge" onclick="scrollToTag('CSS')">CSS</span>
+  <span class="suggest-badge" onclick="scrollToTag('Performance')">Performance</span>
+  <span class="suggest-badge" onclick="scrollToTag('React')">React</span>
+  <span class="suggest-badge" onclick="scrollToTag('Node.js')">Node.js</span>
+</div>
+<script>
+function scrollToTag(tag) {
+  // Find the first post with the matching tag and scroll to it
+  const posts = document.querySelectorAll('#discover .post-card');
+  for (let post of posts) {
+    const tagElem = post.querySelector('.post-tag');
+    if (tagElem && tagElem.textContent.trim().toLowerCase() === tag.toLowerCase()) {
+      post.scrollIntoView({behavior: 'smooth', block: 'center'});
+      post.classList.add('highlight-post');
+      setTimeout(() => post.classList.remove('highlight-post'), 1500);
+      break;
+    }
+  }
+}
+</script>
+<script>
+// Live Markdown preview (basic)
+const contentInput = document.getElementById('articleContent');
+const previewContainer = document.getElementById('previewContainer');
+const preview = document.getElementById('articlePreview');
+contentInput.addEventListener('input', function() {
+  if (contentInput.value.trim()) {
+    previewContainer.style.display = 'block';
+    preview.innerHTML = contentInput.value
+      .replace(/^### (.*$)/gim, '<h5>$1</h5>')
+      .replace(/^## (.*$)/gim, '<h4>$1</h4>')
+      .replace(/^# (.*$)/gim, '<h3>$1</h3>')
+      .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
+      .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+      .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+      .replace(/!\[(.*?)\]\((.*?)\)/gim, '<img alt="$1" src="$2" style="max-width:100%;">')
+      .replace(/\n$/gim, '<br>');
+  } else {
+    previewContainer.style.display = 'none';
+    preview.innerHTML = '';
+  }
+});
+
+// Insert code block
+document.getElementById('insertCodeBtn').onclick = function() {
+  const textarea = contentInput;
+  const codeBlock = "\n```\n// your code here\n```\n";
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  textarea.value = textarea.value.substring(0, start) + codeBlock + textarea.value.substring(end);
+  textarea.focus();
+  textarea.selectionStart = textarea.selectionEnd = start + 5;
+  textarea.dispatchEvent(new Event('input'));
+};
+
+// Insert image markdown
+document.getElementById('insertImageBtn').onclick = function() {
+  const url = prompt('Enter image URL:');
+  if (url) {
+    const textarea = contentInput;
+    const imageMarkdown = `\n![alt text](${url})\n`;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    textarea.value = textarea.value.substring(0, start) + imageMarkdown + textarea.value.substring(end);
+    textarea.focus();
+    textarea.selectionStart = textarea.selectionEnd = start + 2;
+    textarea.dispatchEvent(new Event('input'));
+  }
+};
+
+// Word count feature
+const wordCountBtn = document.getElementById('wordCountBtn');
+const wordCountSpan = document.getElementById('wordCount');
+wordCountBtn.onclick = function() {
+  const text = contentInput.value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  wordCountSpan.textContent = `Words: ${count}`;
+};
+
+// Draft saving/loading (localStorage)
+const draftsContainer = document.getElementById('draftsContainer');
+const draftsList = document.getElementById('draftsList');
+const saveDraftCheckbox = document.getElementById('saveDraft');
+const articleForm = document.getElementById('articleForm');
+
+function loadDrafts() {
+  draftsList.innerHTML = '';
+  const drafts = JSON.parse(localStorage.getItem('articleDrafts') || '[]');
+  if (drafts.length) {
+    draftsContainer.style.display = 'block';
+    drafts.forEach((draft, idx) => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item d-flex justify-content-between align-items-center';
+      li.innerHTML = `<span>${draft.title || '(Untitled)'}</span>
+        <button class="btn btn-sm btn-outline-primary" data-idx="${idx}">Load</button>
+        <button class="btn btn-sm btn-outline-danger ms-2" data-del="${idx}">Delete</button>`;
+      draftsList.appendChild(li);
+    });
+  } else {
+    draftsContainer.style.display = 'none';
+  }
+}
+loadDrafts();
+
+draftsList.onclick = function(e) {
+  if (e.target.dataset.idx !== undefined) {
+    const drafts = JSON.parse(localStorage.getItem('articleDrafts') || '[]');
+    const draft = drafts[e.target.dataset.idx];
+    document.getElementById('articleTitle').value = draft.title;
+    document.getElementById('articleCategory').value = draft.category;
+    document.getElementById('articleImage').value = draft.image;
+    document.getElementById('articleContent').value = draft.content;
+    document.getElementById('articleTags').value = draft.tags;
+    saveDraftCheckbox.checked = false;
+    contentInput.dispatchEvent(new Event('input'));
+  }
+  if (e.target.dataset.del !== undefined) {
+    let drafts = JSON.parse(localStorage.getItem('articleDrafts') || '[]');
+    drafts.splice(e.target.dataset.del, 1);
+    localStorage.setItem('articleDrafts', JSON.stringify(drafts));
+    loadDrafts();
+  }
+};
+
+articleForm.onsubmit = function(e) {
+  e.preventDefault();
+  if (saveDraftCheckbox.checked) {
+    // Save as draft
+    let drafts = JSON.parse(localStorage.getItem('articleDrafts') || '[]');
+    drafts.push({
+      title: document.getElementById('articleTitle').value,
+      category: document.getElementById('articleCategory').value,
+      image: document.getElementById('articleImage').value,
+      content: document.getElementById('articleContent').value,
+      tags: document.getElementById('articleTags').value
+    });
+    localStorage.setItem('articleDrafts', JSON.stringify(drafts));
+    loadDrafts();
+    alert('Draft saved!');
+  } else {
+    alert('Article submitted! (Demo only)');
+  }
+};
+
+document.getElementById('clearFormBtn').onclick = function() {
+  articleForm.reset();
+  previewContainer.style.display = 'none';
+  preview.innerHTML = '';
+  wordCountSpan.textContent = '';
+};
+
+// Enhanced search features
+const articles = [
+  "Building a Responsive Website with Bootstrap",
+  "Mastering JavaScript ES6 Features",
+  "Top 5 Tips for Clean HTML & CSS",
+  "PHP vs JavaScript: What to Use Where",
+  "Designing with CSS Grid Layout",
+  "Optimizing Web Performance for 2025",
+  "Understanding React Hooks in Depth",
+  "10 Tips to Boost Node.js Performance",
+  "Making Your Website Accessible for Everyone",
+  "Why You Should Use TypeScript in 2025"
+];
+
+const searchInput = document.getElementById('searchInput');
+const suggestionsBox = document.getElementById('searchSuggestions');
+const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+function showSuggestions(value) {
+  const val = value.trim().toLowerCase();
+  clearSearchBtn.style.display = val ? 'inline' : 'none';
+  if (!val) {
+    suggestionsBox.style.display = 'none';
+    suggestionsBox.innerHTML = '';
+    return;
+  }
+  const matches = articles.filter(title => title.toLowerCase().includes(val));
+  if (matches.length) {
+    suggestionsBox.innerHTML = matches.map((title, idx) => 
+      `<div class="suggestion-item" tabindex="0" style="padding:8px 16px;cursor:pointer;" 
+        onclick="selectSuggestion('${title.replace(/'/g,"\\'")}')" 
+        onkeydown="if(event.key==='Enter'){selectSuggestion('${title.replace(/'/g,"\\'")}')}
+      >${highlightMatch(title, val)}</div>`
+    ).join('');
+    suggestionsBox.style.display = 'block';
+    suggestionsBox.style.left = searchInput.offsetLeft + 'px';
+    suggestionsBox.style.top = (searchInput.offsetTop + searchInput.offsetHeight) + 'px';
+    suggestionsBox.style.width = searchInput.offsetWidth + 'px';
+  } else {
+    suggestionsBox.innerHTML = '<div style="padding:8px 16px;color:#888;">No results found</div>';
+    suggestionsBox.style.display = 'block';
+  }
+}
+
+// Highlight matched text
+function highlightMatch(text, query) {
+  const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function selectSuggestion(title) {
+  searchInput.value = title;
+  suggestionsBox.style.display = 'none';
+  performSearch();
+}
+
+function performSearch() {
+  if (!searchInput.value.trim()) return;
+  alert('Searching for: ' + searchInput.value);
+  suggestionsBox.style.display = 'none';
+}
+
+// Clear search input
+clearSearchBtn.onclick = function() {
+  searchInput.value = '';
+  clearSearchBtn.style.display = 'none';
+  suggestionsBox.style.display = 'none';
+  searchInput.focus();
+};
+
+// Keyboard navigation for suggestions
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowDown') {
+    const first = suggestionsBox.querySelector('.suggestion-item');
+    if (first) first.focus();
+  }
+});
+suggestionsBox.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (e.target.nextElementSibling) e.target.nextElementSibling.focus();
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (e.target.previousElementSibling) e.target.previousElementSibling.focus();
+    else searchInput.focus();
+  }
+});
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', function(e) {
+  if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+    suggestionsBox.style.display = 'none';
+  }
+});
+
+const topicDropdown = document.getElementById('topicDropdown');
+
+// Show dropdown on focus
+function showTopicDropdown() {
+  topicDropdown.style.display = 'block';
+  positionDropdown();
+}
+
+// Hide dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  if (!searchInput.contains(e.target) && !topicDropdown.contains(e.target)) {
+    topicDropdown.style.display = 'none';
+  }
+});
+
+// Position dropdown below input
+function positionDropdown() {
+  const rect = searchInput.getBoundingClientRect();
+  topicDropdown.style.left = 0;
+  topicDropdown.style.top = (searchInput.offsetTop + searchInput.offsetHeight) + 'px';
+  topicDropdown.style.width = searchInput.offsetWidth + 'px';
+}
+
+// When user clicks a topic, scroll to the first matching post and show it at the top
+function selectTopic(topic) {
+  searchInput.value = topic;
+  topicDropdown.style.display = 'none';
+  // Find the first post with the matching tag and scroll to it
+  const posts = document.querySelectorAll('#discover .post-card');
+  let found = false;
+  for (let post of posts) {
+    const tagElem = post.querySelector('.post-tag');
+    if (tagElem && tagElem.textContent.trim().toLowerCase() === topic.toLowerCase()) {
+      post.scrollIntoView({behavior: 'smooth', block: 'start'});
+      post.classList.add('highlight-post');
+      setTimeout(() => post.classList.remove('highlight-post'), 1500);
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    alert('No articles found for "' + topic + '"');
+  }
+}
+
+// Also show dropdown if user clicks the input again
+searchInput.addEventListener('focus', showTopicDropdown);
+
+// Optional: hide dropdown on Escape key
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    topicDropdown.style.display = 'none';
+  }
+});
+</script>
+
+<!-- Articles Section -->
+<section id="articles" class="section">
+    <div class="container">
+        <h2 class="section-title">Latest Articles</h2>
+    </div>
+    <div class="container">
+        <div class="posts-grid">
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2018/06/07/12/26/programming-3460032_640.jpg" alt="Web Development">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Web Development</span>
+                    <h3 class="post-title">🌐 Understanding Web Development in 2025</h3>
+                    <h2>Introduction</h2>
+                    <p>Web development refers to the process of building and maintaining websites. It involves the work that happens behind the scenes to make a website look good, work fast, and provide a smooth user experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="web-development" class="section">
+  <div class="container">
+    <h2 class="section-title">Main Areas of Web Development</h2>
+    <div class="d-flex flex-wrap justify-content-center gap-4 mb-5">
+      <div class="p-4 rounded-4 shadow border border-primary-subtle bg-white" style="min-width:260px;max-width:340px;flex:1 1 280px;">
+        <h4 class="mb-2 text-primary"><i class="fas fa-desktop me-2"></i>Front-End</h4>
+        <p class="mb-2">What users see and interact with.</p>
+        <div class="small mb-1"><strong>Languages:</strong> HTML, CSS, JavaScript</div>
+        <div class="small"><strong>Frameworks:</strong> Bootstrap, React, Vue.js, Angular</div>
+      </div>
+      <div class="p-4 rounded-4 shadow border border-success-subtle bg-white" style="min-width:260px;max-width:340px;flex:1 1 280px;">
+        <h4 class="mb-2 text-success"><i class="fas fa-server me-2"></i>Back-End</h4>
+        <p class="mb-2">Logic, databases, and server-side operations.</p>
+        <div class="small mb-1"><strong>Languages:</strong> PHP, Python, Java, Node.js</div>
+        <div class="small mb-1"><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB</div>
+        <div class="small"><strong>Frameworks:</strong> Laravel, Django, Express.js</div>
+      </div>
+      <div class="p-4 rounded-4 shadow border border-warning-subtle bg-white" style="min-width:260px;max-width:340px;flex:1 1 280px;">
+        <h4 class="mb-2 text-warning"><i class="fas fa-layer-group me-2"></i>Full-Stack</h4>
+        <p class="mb-0">Combines front-end and back-end skills for complete solutions.</p>
+      </div>
+    </div>
+
+    <h3 class="section-title">Key Concepts</h3>
+    <div class="d-flex flex-wrap justify-content-center gap-4 mb-5">
+      <div class="bg-primary bg-opacity-10 border border-primary rounded-3 p-3 flex-fill" style="min-width:220px;max-width:320px;">
+        <h5 class="text-primary mb-2"><i class="fas fa-mobile-alt me-2"></i>Responsive Design</h5>
+        <div class="small">Adapts to all devices and screens.</div>
+      </div>
+      <div class="bg-success bg-opacity-10 border border-success rounded-3 p-3 flex-fill" style="min-width:220px;max-width:320px;">
+        <h5 class="text-success mb-2"><i class="fas fa-universal-access me-2"></i>Accessibility</h5>
+        <div class="small">Usable by everyone, including people with disabilities.</div>
+      </div>
+      <div class="bg-warning bg-opacity-10 border border-warning rounded-3 p-3 flex-fill" style="min-width:220px;max-width:320px;">
+        <h5 class="text-warning mb-2"><i class="fas fa-tachometer-alt me-2"></i>Performance</h5>
+        <div class="small">Fast load times and smooth experience.</div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Popular Frameworks &amp; Tools</h3>
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+      <span class="badge rounded-pill bg-primary px-3 py-2 fs-6">React</span>
+      <span class="badge rounded-pill bg-danger px-3 py-2 fs-6">Angular</span>
+      <span class="badge rounded-pill bg-success px-3 py-2 fs-6">Vue.js</span>
+      <span class="badge rounded-pill bg-dark px-3 py-2 fs-6">Express.js</span>
+      <span class="badge rounded-pill bg-info text-dark px-3 py-2 fs-6">Django</span>
+      <span class="badge rounded-pill bg-secondary px-3 py-2 fs-6">Ruby on Rails</span>
+      <span class="badge rounded-pill bg-warning text-dark px-3 py-2 fs-6">MERN Stack</span>
+      <span class="badge rounded-pill bg-light text-dark border px-3 py-2 fs-6">LAMP Stack</span>
+    </div>
+
+    <h3 class="section-title">Best Practices</h3>
+    <div class="row mb-5">
+      <div class="col-md-8 mx-auto">
+        <ul class="list-group list-group-horizontal-md flex-wrap justify-content-center">
+          <li class="list-group-item border-0"><i class="fas fa-check-circle text-success me-2"></i>Clean, maintainable code</li>
+          <li class="list-group-item border-0"><i class="fab fa-git-alt text-danger me-2"></i>Use Git/version control</li>
+          <li class="list-group-item border-0"><i class="fas fa-tachometer-alt text-warning me-2"></i>Optimize performance</li>
+          <li class="list-group-item border-0"><i class="fas fa-globe text-info me-2"></i>Cross-browser compatibility</li>
+          <li class="list-group-item border-0"><i class="fas fa-shield-alt text-secondary me-2"></i>Security best practices</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="section-title">Essential Tools</h3>
+    <div class="d-flex flex-wrap justify-content-center gap-4 mb-5">
+      <div>
+        <div class="mb-2"><i class="fas fa-code text-primary me-2"></i><strong>Editors:</strong> VS Code, Sublime</div>
+        <div class="mb-2"><i class="fab fa-git-alt text-danger me-2"></i><strong>Version Control:</strong> Git, GitHub</div>
+        <div class="mb-2"><i class="fas fa-pencil-ruler text-info me-2"></i><strong>Design:</strong> Figma, Adobe XD</div>
+      </div>
+      <div>
+        <div class="mb-2"><i class="fas fa-tools text-secondary me-2"></i><strong>Dev Tools:</strong> Chrome DevTools, Postman</div>
+        <div class="mb-2"><i class="fas fa-cogs text-warning me-2"></i><strong>Build Tools:</strong> Webpack, Gulp</div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Resources</h3>
+    <div class="row mb-5">
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fab fa-js-square text-warning me-2"></i><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="link-primary">MDN JavaScript</a></li>
+        <li class="list-group-item"><i class="fas fa-graduation-cap text-success me-2"></i><a href="https://www.w3schools.com/" target="_blank" class="link-success">W3Schools</a></li>
+        <li class="list-group-item"><i class="fab fa-css3-alt text-primary me-2"></i><a href="https://css-tricks.com/" target="_blank" class="link-info">CSS-Tricks</a></li>
+      </ul>
+      </div>
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fas fa-campground text-success me-2"></i><a href="https://www.freecodecamp.org/" target="_blank" class="link-success">freeCodeCamp</a></li>
+        <li class="list-group-item"><i class="fas fa-laptop-code text-info me-2"></i><a href="https://www.codecademy.com/" target="_blank" class="link-info">Codecademy</a></li>
+      </ul>
+      </div>
+    </div>
+
+    <h3 class="section-title">Communities</h3>
+    <div class="row mb-5">
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fab fa-stack-overflow text-warning me-2"></i><a href="https://stackoverflow.com/" target="_blank" class="link-warning">Stack Overflow</a></li>
+        <li class="list-group-item"><i class="fab fa-reddit text-danger me-2"></i><a href="https://www.reddit.com/r/webdev/" target="_blank" class="link-danger">Reddit - WebDev</a></li>
+        <li class="list-group-item"><i class="fas fa-user-friends text-primary me-2"></i><a href="https://dev.to/" target="_blank" class="link-primary">Dev.to</a></li>
+      </ul>
+      </div>
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fas fa-comments text-success me-2"></i><a href="https://www.freecodecamp.org/forum/" target="_blank" class="link-success">freeCodeCamp Forum</a></li>
+        <li class="list-group-item"><i class="fas fa-hashtag text-info me-2"></i><a href="https://www.hashnode.com/" target="_blank" class="link-info">Hashnode</a></li>
+      </ul>
+      </div>
+    </div>
+
+    <h3 class="section-title">Certifications</h3>
+    <div class="d-flex flex-wrap gap-3 mb-5">
+      <a class="btn btn-outline-warning rounded-pill" href="https://www.freecodecamp.org/certification" target="_blank"><i class="fas fa-certificate me-2"></i>freeCodeCamp</a>
+      <a class="btn btn-outline-warning rounded-pill" href="https://www.codecademy.com/learn/paths/web-development" target="_blank"><i class="fas fa-certificate me-2"></i>Codecademy Path</a>
+      <a class="btn btn-outline-warning rounded-pill" href="https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011" target="_blank"><i class="fas fa-certificate me-2"></i>Udacity Nanodegree</a>
+      <a class="btn btn-outline-warning rounded-pill" href="https://www.coursera.org/specializations/web-design" target="_blank"><i class="fas fa-certificate me-2"></i>Coursera Web Design</a>
+      <a class="btn btn-outline-warning rounded-pill" href="https://www.edx.org/professional-certificate/coding-for-everyone" target="_blank"><i class="fas fa-certificate me-2"></i>edX Coding for Everyone</a>
+    </div>
+
+    <h3 class="section-title">Career Paths</h3>
+    <div class="d-flex flex-wrap gap-3 justify-content-center mb-5">
+      <span class="badge bg-primary bg-opacity-10 text-primary fs-6 px-3 py-2"><i class="fas fa-laptop-code me-2"></i>Front-End Developer</span>
+      <span class="badge bg-success bg-opacity-10 text-success fs-6 px-3 py-2"><i class="fas fa-database me-2"></i>Back-End Developer</span>
+      <span class="badge bg-warning bg-opacity-10 text-warning fs-6 px-3 py-2"><i class="fas fa-layer-group me-2"></i>Full-Stack Developer</span>
+      <span class="badge bg-info bg-opacity-10 text-info fs-6 px-3 py-2"><i class="fas fa-pencil-ruler me-2"></i>UI/UX Designer</span>
+      <span class="badge bg-secondary bg-opacity-10 text-secondary fs-6 px-3 py-2"><i class="fas fa-server me-2"></i>DevOps Engineer</span>
+    </div>
+
+    <h3 class="section-title">Challenges</h3>
+    <div class="row mb-5">
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fas fa-sync-alt text-warning me-2"></i>Keeping up with new tech</li>
+        <li class="list-group-item"><i class="fas fa-globe text-info me-2"></i>Cross-browser compatibility</li>
+        <li class="list-group-item"><i class="fas fa-tachometer-alt text-success me-2"></i>Performance optimization</li>
+      </ul>
+      </div>
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fas fa-shield-alt text-danger me-2"></i>Security vulnerabilities</li>
+        <li class="list-group-item"><i class="fas fa-users text-primary me-2"></i>Managing client expectations</li>
+      </ul>
+      </div>
+    </div>
+
+    <h3 class="section-title">Future Trends</h3>
+    <div class="row mb-5">
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fas fa-robot text-info me-2"></i>AI-integrated websites</li>
+        <li class="list-group-item"><i class="fas fa-mobile-alt text-success me-2"></i>Progressive Web Apps (PWAs)</li>
+        <li class="list-group-item"><i class="fas fa-layer-group text-warning me-2"></i>Jamstack architecture</li>
+      </ul>
+      </div>
+      <div class="col-md-6">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fas fa-cloud text-primary me-2"></i>Serverless computing</li>
+        <li class="list-group-item"><i class="fab fa-js-square text-secondary me-2"></i>TypeScript adoption</li>
+        <li class="list-group-item"><i class="fas fa-universal-access text-success me-2"></i>Accessibility (WCAG)</li>
+      </ul>
+      </div>
+    </div>
+
+    <h3 class="section-title">FAQs</h3>
+    <div class="accordion mb-5" id="webDevFaq">
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="faq1">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1c" aria-expanded="false" aria-controls="faq1c">
+        <i class="fas fa-question-circle me-2 text-primary"></i> What is web development?
+        </button>
+      </h2>
+      <div id="faq1c" class="accordion-collapse collapse" aria-labelledby="faq1" data-bs-parent="#webDevFaq">
+        <div class="accordion-body">
+        Web development is the process of creating and maintaining websites.
+        </div>
+      </div>
+      </div>
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="faq2">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2c" aria-expanded="false" aria-controls="faq2c">
+        <i class="fas fa-code me-2 text-success"></i> What languages are used in web development?
+        </button>
+      </h2>
+      <div id="faq2c" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#webDevFaq">
+        <div class="accordion-body">
+        Common languages include HTML, CSS, and JavaScript.
+        </div>
+      </div>
+      </div>
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="faq3">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3c" aria-expanded="false" aria-controls="faq3c">
+        <i class="fas fa-exchange-alt me-2 text-warning"></i> What is the difference between front-end and back-end development?
+        </button>
+      </h2>
+      <div id="faq3c" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#webDevFaq">
+        <div class="accordion-body">
+        Front-end focuses on the user interface, back-end on server-side logic.
+        </div>
+      </div>
+      </div>
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="faq4">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4c" aria-expanded="false" aria-controls="faq4c">
+        <i class="fas fa-rocket me-2 text-info"></i> How do I get started in web development?
+        </button>
+      </h2>
+      <div id="faq4c" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#webDevFaq">
+        <div class="accordion-body">
+        Start by learning HTML, CSS, and JavaScript basics.
+        </div>
+      </div>
+      </div>
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="faq5">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5c" aria-expanded="false" aria-controls="faq5c">
+        <i class="fas fa-cubes me-2 text-secondary"></i> What are some popular web development frameworks?
+        </button>
+      </h2>
+      <div id="faq5c" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#webDevFaq">
+        <div class="accordion-body">
+        Popular frameworks include React, Angular, and Vue.js.
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Conclusion</h3>
+    <div class="alert alert-info">
+      Web development is an ever-evolving field that combines creativity and technical skills. Whether you are a beginner or an experienced developer, staying updated with the latest trends and tools is essential for success in this dynamic industry.
+    </div>
+    <p>
+      From mastering front-end frameworks to understanding back-end technologies, the journey of a web developer is filled with challenges and opportunities. Embrace the learning process, engage with the community, and keep building innovative solutions that enhance user experiences.
+    </p>
+    <p>
+      Whether you are building a personal blog or a business platform, knowing the fundamentals and staying updated with new practices is key. With time and practice, anyone can master the web.
+    </p>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories" class="section">
+  <div class="container">
+    <h2 class="section-title">Categories</h2>
+    <div class="d-flex flex-wrap gap-4 justify-content-center mb-4">
+    <div class="category-card bg-primary bg-opacity-10 border border-primary rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-globe fa-2x text-primary mb-2"></i>
+      <h5 class="mb-2">Web Development</h5>
+      <div class="small text-muted">HTML, CSS, JavaScript, Frameworks</div>
+    </div>
+    <div class="category-card bg-success bg-opacity-10 border border-success rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-mobile-alt fa-2x text-success mb-2"></i>
+      <h5 class="mb-2">Mobile Development</h5>
+      <div class="small text-muted">Android, iOS, Flutter, React Native</div>
+    </div>
+    <div class="category-card bg-warning bg-opacity-10 border border-warning rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-chart-line fa-2x text-warning mb-2"></i>
+      <h5 class="mb-2">Data Science</h5>
+      <div class="small text-muted">Python, ML, AI, Visualization</div>
+    </div>
+    <div class="category-card bg-info bg-opacity-10 border border-info rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-cogs fa-2x text-info mb-2"></i>
+      <h5 class="mb-2">DevOps</h5>
+      <div class="small text-muted">CI/CD, Docker, Cloud, Automation</div>
+    </div>
+    <div class="category-card bg-secondary bg-opacity-10 border border-secondary rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-shield-alt fa-2x text-secondary mb-2"></i>
+      <h5 class="mb-2">Cybersecurity</h5>
+      <div class="small text-muted">Security, Pen Testing, Encryption</div>
+    </div>
+    <div class="category-card bg-danger bg-opacity-10 border border-danger rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-database fa-2x text-danger mb-2"></i>
+      <h5 class="mb-2">Databases</h5>
+      <div class="small text-muted">SQL, NoSQL, MongoDB, PostgreSQL</div>
+    </div>
+    <div class="category-card bg-dark bg-opacity-10 border border-dark rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-cloud fa-2x text-dark mb-2"></i>
+      <h5 class="mb-2">Cloud Computing</h5>
+      <div class="small text-muted">AWS, Azure, GCP, Serverless</div>
+    </div>
+    <div class="category-card bg-light bg-opacity-10 border border-light rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-robot fa-2x text-muted mb-2"></i>
+      <h5 class="mb-2">AI & Machine Learning</h5>
+      <div class="small text-muted">Deep Learning, NLP, Vision</div>
+    </div>
+    <div class="category-card bg-primary bg-opacity-10 border border-primary rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-palette fa-2x text-primary mb-2"></i>
+      <h5 class="mb-2">UI/UX Design</h5>
+      <div class="small text-muted">Figma, Adobe XD, Prototyping</div>
+    </div>
+    <div class="category-card bg-success bg-opacity-10 border border-success rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-gamepad fa-2x text-success mb-2"></i>
+      <h5 class="mb-2">Game Development</h5>
+      <div class="small text-muted">Unity, Unreal, Phaser</div>
+    </div>
+    <div class="category-card bg-warning bg-opacity-10 border border-warning rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-network-wired fa-2x text-warning mb-2"></i>
+      <h5 class="mb-2">Networking</h5>
+      <div class="small text-muted">TCP/IP, Routing, Protocols</div>
+    </div>
+    <div class="category-card bg-info bg-opacity-10 border border-info rounded-4 p-4 text-center" style="min-width:180px;max-width:240px;flex:1 1 180px;">
+      <i class="fas fa-code fa-2x text-info mb-2"></i>
+      <h5 class="mb-2">Programming Languages</h5>
+      <div class="small text-muted">Python, Java, C++, Go, Rust</div>
+    </div>
+    </div>
+    <div class="text-center mt-4">
+    <a href="#discover" class="btn btn-outline-primary me-2"><i class="fas fa-compass"></i> Explore Articles</a>
+    <a href="#write" class="btn btn-outline-success"><i class="fas fa-pencil-alt"></i> Write Your Own</a>
+    </div>
+  </div>
+</section>
+
+<!-- Trending Posts -->
+<section id="trending" class="section">
+    <div class="container">
+        <h2 class="section-title">Trending Articles</h2>
+        <div class="posts-grid">
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Web Development">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Web Development</span>
+                    <h3 class="post-title">Building Modern Web Applications with React and Node.js</h3>
+                    <p>Learn how to create full stack applications using the latest features of React 19 and Node.js 22 with performance optimizations.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                        <div>
+                            <strong>Alex Johnson</strong>
+                            <div>May 12, 2025 · 8 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2017/04/12/13/52/internet-2224603_640.jpg" alt="CSS Flexbox">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">CSS</span>
+                    <h3 class="post-title">Mastering CSS Flexbox: A Complete Guide</h3>
+                    <p>Get to grips with CSS Flexbox layout techniques to create responsive designs that adapt seamlessly across devices.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="Author">
+                        <div>
+                            <strong>Jahid Hasan</strong>
+                            <div>Jun 30, 2025 · 7 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80" alt="AI Integration">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">AI Integration</span>
+                    <h3 class="post-title">Integrating AI Features in Your Web Projects</h3>
+                    <p>Discover practical ways to implement AI capabilities like chatbots, recommendation systems, and image recognition in web apps.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author">
+                        <div>
+                            <strong>Sarah Williams</strong>
+                            <div>Jun 3, 2025 · 10 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://cdn.pixabay.com/photo/2023/07/15/23/25/android-8129781_640.jpg" alt="CSS Flexbox">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">CSS</span>
+                    <h3 class="post-title">Mastering CSS Flexbox: A Complete Guide</h3>
+                    <p>Get to grips with CSS Flexbox layout techniques to create responsive designs that adapt seamlessly across devices.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="Author">
+                        <div>
+                            <strong>Jahid Hasan</strong>
+                            <div>Jun 30, 2025 · 7 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80" alt="AI Integration">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">AI Integration</span>
+                    <h3 class="post-title">Integrating AI Features in Your Web Projects</h3>
+                    <p>Discover practical ways to implement AI capabilities like chatbots, recommendation systems, and image recognition in web apps.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author">
+                        <div>
+                            <strong>Sarah Williams</strong>
+                            <div>Jun 3, 2025 · 10 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-img">
+                    <img src="https://images.unsplash.com/photo-1555066931-bf19f8fd1085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Web3 Development">
+                </div>
+                <div class="post-content">
+                    <span class="post-tag">Web3 Development</span>
+                    <h3 class="post-title">The Future of Web: Building Decentralized Applications</h3>
+                    <p>Explore the world of Web3 development with Ethereum, Solidity, and decentralized storage solutions for the next-gen web.</p>
+                    <div class="post-meta">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Author">
+                        <div>
+                            <strong>Michael Chen</strong>
+                            <div>Apr 28, 2025 · 12 min read</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #fff; padding: 40px 0; font-family: Arial, sans-serif;">
+  <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
+
+    <!-- About Section -->
+    <div style="flex: 1 1 250px; padding: 10px;">
+      <h3 style="color: #f1c40f;">About Me</h3>
+      <p>I am a passionate web developer crafting modern and user-friendly websites with traditional principles of design, code, and quality.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div style="flex: 1 1 150px; padding: 10px;">
+      <h3 style="color: #f1c40f;">Quick Links</h3>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="https://jahidads.github.io/Portfolio/" style="color: #0099ff; text-decoration: none;">Portfolio</a></li>
+        <li><a href="https://jahidads.github.io/CyberShield/" style="color: #029aff; text-decoration: none;">Cybershield</a></li>
+        <li><a href="https://jahidads.github.io/Cyber-Security/" style="color: #0099ff; text-decoration: none;">Cybersecurity</a></li>
+        <li><a href="https://jahidads.github.io/Developer-portfolio/" style="color: #0099ff; text-decoration: none;">jahidads.dev</a></li>
+        <li><a href="https://jahidads.github.io/business-portfolio/" style="color: #0099ff; text-decoration: none;">Business</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div style="flex: 1 1 250px; padding: 10px;">
+      <h3 style="color: #f1c40f;">Contact</h3>
+      <p>Email: jahidads.dev@gmail.com</p>
+      <p>Phone: +880 13088 39759</p>
+      <p>Location: Dhaka, Bangladesh</p>
+    </div>
+
+  </div>
+
+  <!-- Copyright -->
+  <div style="text-align: center; margin-top: 20px; border-top: 1px solid #444; padding-top: 15px; font-size: 14px;">
+    © 2025 Jahid Hasan | Web Developer. All rights reserved.
+  </div>
+</footer>
+
+<!-- Sidebar overlay for mobile -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navContainer = document.getElementById('navContainer');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+  menuToggle.addEventListener('click', function() {
+    navContainer.classList.toggle('open');
+    sidebarOverlay.classList.toggle('active');
+  });
+
+  sidebarOverlay.addEventListener('click', function() {
+    navContainer.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+  });
+
+  // Animated stats for hero section
+document.addEventListener('DOMContentLoaded', function() {
+  // Count posts, authors, topics from the DOM
+  const posts = document.querySelectorAll('#discover .post-card');
+  const authors = new Set();
+  const topics = new Set();
+  posts.forEach(post => {
+    const author = post.querySelector('.post-meta strong');
+    if (author) authors.add(author.textContent.trim());
+    const tag = post.querySelector('.post-tag');
+    if (tag) topics.add(tag.textContent.trim());
+  });
+  animateStat('statPosts', posts.length, 800);
+  animateStat('statAuthors', authors.size, 800);
+  animateStat('statTopics', topics.size, 800);
+});
+function animateStat(id, end, duration) {
+  const el = document.getElementById(id);
+  let start = 0;
+  const step = Math.ceil(end / (duration / 30));
+  function update() {
+    start += step;
+    if (start >= end) {
+      el.textContent = end;
+    } else {
+      el.textContent = start;
+      setTimeout(update, 30);
+    }
+  }
+  update();
+}
+</script>
+</body>
+</html>
