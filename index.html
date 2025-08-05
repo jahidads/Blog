@@ -475,7 +475,68 @@
   }
 }
 @media (min-width: 992px) {
-  #home .hero-image { order: -1; }
+  .menu-toggle {
+    display: none !important;
+  }
+}
+@media (max-width: 991px) {
+  .social-links {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-top: 8px !important;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    text-align: center;
+  }
+  .social-links h2 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    padding: 6px 0;
+  }
+  .social-links a {
+    font-size: 1.4rem;
+    margin: 0 6px;
+    padding: 0;
+  }
+  #navContainer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  #navContainer .logo {
+    margin-bottom: 20px;
+  }
+  #navContainer .nav-links {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  #navContainer .nav-links a {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  #navContainer .social-links {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-top: 8px !important;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    text-align: center;
+  }
+  #navContainer .social-links h2 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    padding: 6px 0;
+  }
+  #navContainer .social-links a {
+    font-size: 1.4rem;
+    margin: 0 6px;
+    padding: 0;
+  }
 }
   </style>
 </head>
@@ -495,19 +556,49 @@
     <li><a href="#trending"><i class="fas fa-chart-line me-2"></i> Trending</a></li>
   </ul>
   <div class="social-links" style="width:100%;text-align:center;padding-top:18px;">
-    <h2 style="font-size:1.1rem;font-weight:600;margin-bottom:10px;letter-spacing:0.5px;background:linear-gradient(90deg,#414253 0%,#3d4144 100%);color:#fff;padding:8px 0;border-radius:8px;box-shadow:0 2px 8px rgba(47, 50, 65, 0.07);text-shadow:0 1px 4px rgba(60,80,180,0.12);">Follow Me</h2>
-    <a href="https://x.com/jahidhasan_tw" target="_blank" title="Twitter" style="margin:0 10px;">
-      <i class="fab fa-twitter" style="color:#1da1f2;"></i>
-    </a>
-    <a href="https://github.com/jahidads" target="_blank" title="GitHub" style="margin:0 10px;">
-      <i class="fab fa-github" style="color:#fffafa;"></i>
-    </a>
-    <a href="https://bd.linkedin.com/in/jahidads" target="_blank" title="LinkedIn" style="margin:0 10px;">
-      <i class="fab fa-linkedin" style="color:#0077b5;"></i>
-    </a>
-    <a href="https://www.instagram.com/jahidhasan2.0ff/" target="_blank" title="Instagram" style="margin:0 10px;">
-      <i class="fab fa-instagram" style="color:#e1306c;"></i>
-    </a>
+    <h2 style="font-size:1.1rem;font-weight:600;margin-bottom:10px;letter-spacing:0.5px;background:linear-gradient(90deg,#414253 0%,#3d4144 100%);color:#fff;padding:8px 0;border-radius:8px;box-shadow:0 2px 8px rgba(47, 50, 65, 0.07);text-shadow:0 1px 4px rgba(60,80,180,0.12);text-align:center;">Follow Me</h2>
+    <ul class="social-links" style="display:flex;justify-content:center;flex-wrap:wrap;gap:12px;">
+    <li>
+      <a href="https://www.facebook.com/jahidads1" target="_blank" title="Facebook" style="color:#3b5998;">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a href="https://x.com/jahidhasan_tw" target="_blank" title="Twitter" style="color:#1da1f2;">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/jahidads" target="_blank" title="GitHub" style="margin:0 10px;">
+        <i class="fab fa-github" style="color:#fffafa;"></i>
+      </a>
+    </li>
+    <li>
+      <a href="https://bd.linkedin.com/in/jahidads" target="_blank" title="LinkedIn" style="margin:0 10px;">
+        <i class="fab fa-linkedin" style="color:#0077b5;"></i>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.instagram.com/jahidhasan2.0ff/" target="_blank" title="Instagram" style="margin:0 10px;">
+        <i class="fab fa-instagram" style="color:#e1306c;"></i>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.youtube.com/@jahidads" target="_blank" title="YouTube" style="margin:0 10px;">
+        <i class="fab fa-youtube" style="color:#ff0000;"></i>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.twitch.tv/jahidads" target="_blank" title="Twitch" style="margin:0 10px;">
+        <i class="fab fa-twitch" style="color:#9146ff;"></i>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.pinterest.com/jahidads/" target="_blank" title="Pinterest" style="margin:0 10px;">
+        <i class="fab fa-pinterest" style="color:#bd081c;"></i>
+      </a>
+    </li>
+  </ul>
   </div>
 </div>
 
@@ -1767,5 +1858,4 @@ function animateStat(id, end, duration) {
 }
 </script>
 </body>
-
 </html>
